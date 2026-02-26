@@ -1,2 +1,2 @@
 # SpinningASCii
-Exploring mathematical aplications in programming: learning how to create spinning ASCii objects.
+Exploring mathematical applications in programming: learning how to create spinning ASCii objects.
