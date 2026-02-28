@@ -35,8 +35,8 @@ float calculateForPoint(float i, float j, float k, char symbol, float *x, float 
 
 int main() {
     float A = 0, B = 0, C = 0; //angles
-    const int cubeWidth = 15; 
-    const int screenWidth = 40, screenHeight = 40;
+    const int cubeWidth = 30; 
+    const int screenWidth = 60, screenHeight = 40;
 
     int bufferLength = screenHeight * screenWidth; //buffer stores the amount pixels/char_placeholders according to screen size
 
@@ -45,7 +45,7 @@ int main() {
 
     const char backgroundChar = ' '; //empty space as default background character
 
-    const int distanceFromCam = 100; //view is set on the z axis
+    const int distanceFromCam = 80; //view is set on the z axis
     const float k1 = 40; //distance of the 
     float x, y, z; //xyz coordinates of each point
     //float ooz; //"one over z": used to turn 2 divisions into 1 division and two multiplications (cheaper computationaly)
@@ -80,9 +80,9 @@ int main() {
         for(int k = 0; k < screenWidth * screenHeight; k++) {
             putchar(k % screenWidth ? buffer[k] : 10); //if k isn't at the end of a row prints buffer[k], else prints '\n' (ascii code 10)
         }
-        A += 0.1;
-        B += 0.1;
-        C += 0.1;
+        A += 0.15;
+        B += 0.15;
+        C += 0.15;
         usleep(8000); // ~120fps cap, adjust for desired speed
     } 
 
