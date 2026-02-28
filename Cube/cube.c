@@ -35,8 +35,8 @@ float calculateForPoint(float i, float j, float k, char symbol, float *x, float 
 
 int main() {
     float A = 0, B = 0, C = 0; //angles
-    const int cubeWidth = 20; 
-    const int screenWidth = 58, screenHeight = 30;
+    const int cubeWidth = 15; 
+    const int screenWidth = 40, screenHeight = 40;
 
     int bufferLength = screenHeight * screenWidth; //buffer stores the amount pixels/char_placeholders according to screen size
 
@@ -60,8 +60,18 @@ int main() {
         // Front face (z = +cubeWidth/2)
         for(float i = -cubeWidth / 2; i < cubeWidth / 2; i += 0.15) {
             for(float j = -cubeWidth / 2; j < cubeWidth / 2; j += 0.15) {
-                calculateForPoint(i, j, cubeWidth / 2, '@', &x, &y, &z, distanceFromCam,
-                     A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer);
+                calculateForPoint(i, j, -cubeWidth / 2, '@', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (z-)
+                calculateForPoint(-i, j, cubeWidth / 2, '#', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (z+)  
+                calculateForPoint(-cubeWidth / 2, i, -j, '~', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (x-) 
+                calculateForPoint(cubeWidth / 2, i, j, '$', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (x+) 
+                calculateForPoint(i, -cubeWidth / 2, j, ';', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (y-) 
+                calculateForPoint(i, cubeWidth / 2, j, '+', &x, &y, &z, distanceFromCam,
+                    A, B, C, &xp, &yp, screenWidth, screenHeight, k1, zBuffer, buffer); //face (y+)   
             }
         }
 
