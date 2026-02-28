@@ -24,9 +24,9 @@ float calculateForPoint(float i, float j, float k, char symbol, float *x, float 
     *xp = (int)(screenWidth / 2 + *x * k1 / *z * 2);
     *yp = (int)(screenHeight / 2 + *y * k1 / *z);
 
-    int idx = (*xp) + (*yp) *screenWidth;
-    if(idx >= 0 && idx < screenWidth * screenHeight) {
-        if(1 / *z > zbuffer[idx]) {
+    int idx = (*xp) + (*yp) *screenWidth; //1D index for a 2D coordinate (xp, yp) search row-major order formula
+    if(idx >= 0 && idx < screenWidth * screenHeight) { //bound checking
+        if(1 / *z > zbuffer[idx]) { //if z coordinate of point is in front of previous one, print it, else, print previous one.
             zbuffer[idx] = 1 / *z;
             buffer[idx] = symbol;
         }
@@ -35,6 +35,7 @@ float calculateForPoint(float i, float j, float k, char symbol, float *x, float 
 
 int main() {
     float A = 0, B = 0, C = 0; //angles
+
     const int cubeWidth = 30; 
     const int screenWidth = 60, screenHeight = 40;
 
@@ -45,10 +46,10 @@ int main() {
 
     const char backgroundChar = ' '; //empty space as default background character
 
-    const int distanceFromCam = 80; //view is set on the z axis
-    const float k1 = 40; //distance of the 
+    const int distanceFromCam = 80; //distance form view to 3d cube view is set on the z axis, form negative to positive
+    const float k1 = 40; //distance from view to screen
+
     float x, y, z; //xyz coordinates of each point
-    //float ooz; //"one over z": used to turn 2 divisions into 1 division and two multiplications (cheaper computationaly)
     int xp, yp; //x and y projections on the screen, for lighting and char superposition purposes
 
     printf("\x1b[2J");
@@ -57,7 +58,6 @@ int main() {
         memset(buffer, backgroundChar, bufferLength); //resets buffer/background characters to ' '
         memset(zBuffer, 0, screenHeight * screenWidth * 4); //resets z value of each point to 0 (represents a point at infinity)
 
-        // Front face (z = +cubeWidth/2)
         for(float i = -cubeWidth / 2; i < cubeWidth / 2; i += 0.15) {
             for(float j = -cubeWidth / 2; j < cubeWidth / 2; j += 0.15) {
                 calculateForPoint(i, j, -cubeWidth / 2, '@', &x, &y, &z, distanceFromCam,
