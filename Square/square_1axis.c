@@ -38,15 +38,15 @@ int main() {
     while(1) {
         memset(buffer, ' ', bufferLength);
 
-        for(float i = -squareWidth / 2; i < squareWidth / 2; i += 0.15) {
-            for(float j = -squareWidth / 2; j < squareWidth / 2; j += 0.15) {
+        for(float i = squareWidth / 2; i > -squareWidth / 2; i -= 0.15) {
+            for(float j = squareWidth / 2; j > -squareWidth / 2; j -= 0.15) {
                 calculateForPoint(i, j, &x, &y, theta, buffer, screenWidth, screenHeight, bufferLength);
             }
         }
 
         printf("\x1b[H");
 
-        for(int k = 0; k < bufferLength; k++) {
+        for(int k = bufferLength - 1; k >= 0; k--) {
             putchar(k % screenWidth ? buffer[k] : 10);
         }
 
